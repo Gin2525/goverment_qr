@@ -110,7 +110,7 @@ def handle_postback(event):
             with conn.cursor() as cur:
                 cur.execute(sql)
 
-            buttons_template_message = TemplateSendMessage(
+            message = TemplateSendMessage(
                 alt_text='Buttons template',
                 template=ButtonsTemplate(
                 title='いつ転居なされる予定ですか？',
@@ -123,10 +123,13 @@ def handle_postback(event):
                     )
                 ])
             )
-        elif(query[1]==ANSWER[QUESTION_TYPE[0]["住民票発行"]]): #answer:issueResidentCart
+            #返信
+            line_bot_api.reply_message(rt,messages=message)
+
+        elif(answer==ANSWER[QUESTION_TYPE[0]["住民票発行"]]): #answer:issueResidentCart
             #未定
             return
-        elif(query[1]==ANSWER[QUESTION_TYPE[0]["マイナンバーカードの発行"]]): #answer:issueMyNumber
+        elif(answer[1]==ANSWER[QUESTION_TYPE[0]["マイナンバーカードの発行"]]): #answer:issueMyNumber
             #未定
             return
 
