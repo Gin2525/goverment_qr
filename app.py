@@ -48,6 +48,9 @@ ANSWER ={
         "引っ越し手続き":"moving",
         "住民票発行":"issueResidentCart",
         "マイナンバーカードの発行":"issueMyNumberCard"
+    },
+    "question_NM":{
+        "引っ越し手続き0":"moving0"
     }
 
 }
@@ -156,10 +159,15 @@ def handle_postback(event):
 
         elif(answer==ANSWER[question]["住民票発行"]): #answer:issueResidentCart
             #未定
-            return
+            line_bot_api.reply_message(rt,"続きは開発中です。")
         elif(answer[1]==ANSWER[question]["マイナンバーカードの発行"]): #answer:issueMyNumber
             #未定
-            return
+            line_bot_api.reply_message(rt,"続きは開発中です。")
+    
+    if(question==QUESTION_TYPE[1]):
+        if(answer==ANSWER[question]["引っ越し手続き0"]):
+            #未定
+            line_bot_api.reply_message(rt,"続きは開発中です。")
 
 @handler.add(FollowEvent)
 def handle_follow(event):
