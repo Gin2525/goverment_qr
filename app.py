@@ -125,10 +125,11 @@ def handle_message(event):
 def handle_postback(event):
     rt = event.reply_token
     user_id = event.source.user_id
+    print(f"debug:{event.postback.data}")
     question,answer = event.postback.data.split(':') #':'で文字列を分解し、[questionType,answer]　で分ける。
     
-
-    if(question==QUESTION_TYPE[0]):#type:start
+    #type:start
+    if(question==QUESTION_TYPE[0]):
         if(answer==ANSWER[question]["引っ越し手続き"]): #answer:moving
             sql = f"""
                 INSERT INTO {TRANSACTION_TABLE}({C_USERID},{C_QUESTION_TYPE},{C_AT_DATETIME},{C_ANSWER})
@@ -155,17 +156,18 @@ def handle_postback(event):
 
         elif(answer==ANSWER[question]["住民票発行"]): #answer:issueResidentCart
             #未定
-            line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中で"))
+            line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中です"))
+
         elif(answer[1]==ANSWER[question]["マイナンバーカードの発行"]): #answer:issueMyNumber
             #未定
-            line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中で"))
+            line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中です"))
     
-    #moving_1
+    #type:question_n
     if(question==QUESTION_TYPE[1]):
         if(answer==ANSWER[question]["引っ越し手続き_質問1"]):
             #未定
             ### DBに日時を格納する必要あり。
-            line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中で"))
+            line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中です"))
 
 @handler.add(FollowEvent)
 def handle_follow(event):
