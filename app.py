@@ -49,8 +49,8 @@ ANSWER ={
         "マイナンバーカードの発行":"issueMyNumberCard"
     },
     "question_n":{
-        "引っ越し手続き_質問1":"moving_1"
-    }
+        "引っ越し手続き_質問1":"moving_1",
+    },
 
 }
 
@@ -117,8 +117,7 @@ def handle_message(event):
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="""最初から選び直したいときは\n
-        「最初から」or「さいしょから」\nと入力してください。""")
+        TextSendMessage(text="""最初から選び直したいときは\n「最初から」or「さいしょから」\nと入力してください。""")
     )
 
 
