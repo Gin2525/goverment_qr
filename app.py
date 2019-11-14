@@ -11,7 +11,6 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
     MessageAction, QuickReply, QuickReplyButton,
-    CameraAction,
 )
 #以下、Flask web app
 app = Flask(__name__)
@@ -30,6 +29,11 @@ def handle_message(event):
     #LINEコンソールのwebhook URL のエラー回避用.
     if event.reply_token == "00000000000000000000000000000000":
         return 
+
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=event.message.text)
+    )
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
