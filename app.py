@@ -87,10 +87,37 @@ def handle_message(event):
     #LINEコンソールのwebhook URL のエラー回避用.
     if event.reply_token == "00000000000000000000000000000000":
         return 
+    
+    if event.message.text=="最初から" or event.message.text == "さいしょから":
+        #ボタンテンプレートメッセージを作成
+        buttons_template_message = TemplateSendMessage(
+            alt_text='Buttons template',
+            template=ButtonsTemplate(
+            title='目的選択',
+            text='自分の目的に合うものをご選択ください。',
+            actions=[
+                PostbackAction(
+                    label='引っ越し手続き',
+                    data='start:moving'
+                ),
+                PostbackAction(
+                    label='住民票発行',
+                    data='start:issueResidentCard'
+                ),
+                PostbackAction(
+                    label='マイナンバーカード発行',
+                    data='start:issueMyNumberCard'
+                )
+            ])
+        )
+        line_bot_api.reply_message(event.reply_token, messages=buttons_template_message)
+
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text)
+        TextSendMessage(text="""最初から選び直したいときは\n
+        「最初から」or「さいしょから」
+        と入力してください。""")
     )
 
 
