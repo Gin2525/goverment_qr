@@ -45,7 +45,7 @@ QUESTION_TYPE=[
 ANSWER ={
     "start":{
         "引っ越し手続き":"moving",
-        "住民票発行":"issueResidentCart",
+        "住民票発行":"issueResidentCard",
         "マイナンバーカードの発行":"issueMyNumberCard"
     },
     "question_n":{
