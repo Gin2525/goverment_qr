@@ -81,6 +81,7 @@ def handle_follow(event):
     reply_token = event.reply_token
     userID = event.source.user_id
 
+    #ボタンテンプレートメッセージを作成
     buttons_template_message = TemplateSendMessage(
         alt_text='Buttons template',
         template=ButtonsTemplate(
@@ -102,6 +103,9 @@ def handle_follow(event):
             )
         ])
     )
+
+    
+    line_bot_api.reply_message(reply_token, messages=buttons_template_message)
     
     # sql = f"""
     # INSERT INTO {TABLE_NAME}({C_USERID},{C_USERID},{C_QUESTION_TYPE},{C_AT_DATETIME})
