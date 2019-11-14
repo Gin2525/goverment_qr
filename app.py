@@ -114,11 +114,11 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, messages=buttons_template_message)
 
-
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text="""最初から選び直したいときは\n「最初から」or「さいしょから」\nと入力してください。""")
-    )
+    else:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="""最初から選び直したいときは\n「最初から」or「さいしょから」\nと入力してください。""")
+        )
 
 
 @handler.add(PostbackEvent)
