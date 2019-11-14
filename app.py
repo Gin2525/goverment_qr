@@ -50,7 +50,7 @@ ANSWER ={
         "マイナンバーカードの発行":"issueMyNumberCard"
     },
     "question_NM":{
-        "引っ越し手続き0":"moving0"
+        "引っ越し手続き_質問0":"moving0"
     }
 
 }
@@ -119,8 +119,7 @@ def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="""最初から選び直したいときは\n
-        「最初から」or「さいしょから」
-        と入力してください。""")
+        「最初から」or「さいしょから」\nと入力してください。""")
     )
 
 
@@ -149,7 +148,7 @@ def handle_postback(event):
                 actions=[
                     DatetimePickerAction(
                         label='転居予定日の選択',
-                        data=f"question_NM:{question}0",
+                        data=f"question_moving0:{question}0",
                         mode="datetime",
                     )
                 ])
@@ -159,15 +158,16 @@ def handle_postback(event):
 
         elif(answer==ANSWER[question]["住民票発行"]): #answer:issueResidentCart
             #未定
-            line_bot_api.reply_message(rt,"続きは開発中です。")
+            line_bot_api.reply_message(rt,messages="続きは開発中です。")
         elif(answer[1]==ANSWER[question]["マイナンバーカードの発行"]): #answer:issueMyNumber
             #未定
-            line_bot_api.reply_message(rt,"続きは開発中です。")
+            line_bot_api.reply_message(rt,messages="続きは開発中です。")
     
     if(question==QUESTION_TYPE[1]):
-        if(answer==ANSWER[question]["引っ越し手続き0"]):
+        if(answer==ANSWER[question]["引っ越し手続き_質問0"]):
             #未定
-            line_bot_api.reply_message(rt,"続きは開発中です。")
+            ### DBに日時を格納する必要あり。
+            line_bot_api.reply_message(rt,messages="続きは開発中です。")
 
 @handler.add(FollowEvent)
 def handle_follow(event):
