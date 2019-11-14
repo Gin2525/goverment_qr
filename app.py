@@ -24,3 +24,7 @@ def handle_message(event):
     #LINEコンソールのwebhook URL のエラー回避用.
     if event.reply_token == "00000000000000000000000000000000":
         return 
+
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
