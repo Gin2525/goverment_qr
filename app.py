@@ -146,7 +146,7 @@ def handle_postback(event):
                 actions=[
                     DatetimePickerAction(
                         label='転居予定日の選択',
-                        data=f"question_n:{question}_1",
+                        data=f"question_n:{answer}_1",
                         mode="datetime",
                     )
                 ])
