@@ -117,7 +117,7 @@ def handle_message(event):
     else: #その他のメッセージがきた場合。
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="""最初から選び直したいときは\n「最初から」or「さいしょから」\nと入力してください。""")
+            TextSendMessage(text="最初から選び直したいときは\n「最初から」or「さいしょから」\nと入力してください。")
         )
 
 
@@ -125,7 +125,7 @@ def handle_message(event):
 def handle_postback(event):
     rt = event.reply_token
     user_id = event.source.user_id
-    print(f"debug:{event.postback.data}")
+    print(f"[debug:{event.postback.data}]")
     question,answer = event.postback.data.split(':') #':'で文字列を分解し、[questionType,answer]　で分ける。
     
     #type:start
@@ -156,9 +156,11 @@ def handle_postback(event):
 
         elif(answer==ANSWER[question]["住民票発行"]): #answer:issueResidentCart
             #未定
+            print("debug:entered 住民票発行")
             line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中です"))
 
-        elif(answer[1]==ANSWER[question]["マイナンバーカードの発行"]): #answer:issueMyNumber
+        elif(answer==ANSWER[question]["マイナンバーカードの発行"]): #answer:issueMyNumber
+            print("debug:entered マイナンバーカードの発行")
             #未定
             line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中です"))
     
