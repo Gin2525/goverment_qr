@@ -114,7 +114,7 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, messages=buttons_template_message)
 
-    else:
+    else: #その他のメッセージがきた場合。
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text="""最初から選び直したいときは\n「最初から」or「さいしょから」\nと入力してください。""")
@@ -155,17 +155,17 @@ def handle_postback(event):
 
         elif(answer==ANSWER[question]["住民票発行"]): #answer:issueResidentCart
             #未定
-            line_bot_api.reply_message(rt,messages="続きは開発中です。")
+            line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中で"))
         elif(answer[1]==ANSWER[question]["マイナンバーカードの発行"]): #answer:issueMyNumber
             #未定
-            line_bot_api.reply_message(rt,messages="続きは開発中です。")
+            line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中で"))
     
     #moving_1
     if(question==QUESTION_TYPE[1]):
         if(answer==ANSWER[question]["引っ越し手続き_質問1"]):
             #未定
             ### DBに日時を格納する必要あり。
-            line_bot_api.reply_message(rt,messages="続きは開発中です。")
+            line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中で"))
 
 @handler.add(FollowEvent)
 def handle_follow(event):
