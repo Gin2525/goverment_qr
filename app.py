@@ -167,6 +167,7 @@ def handle_postback(event):
     #type:question_n
     if(question==QUESTION_TYPE[1]):
         if(answer==ANSWER[question]["引っ越し手続き_質問1"]):
+            print("debug:entered 引っ越し手続き_質問1")
             #未定
             ### DBに日時を格納する必要あり。
             line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中です"))
