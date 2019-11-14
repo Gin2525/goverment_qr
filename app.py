@@ -44,7 +44,7 @@ QUESTION_TYPE=[
     "confirm",
 ]
 ANSWER ={
-    QUESTION_TYPE[0]:{
+    "start":{
         "引っ越し手続き":"moving",
         "住民票発行":"issueResidentCart",
         "マイナンバーカードの発行":"issueMyNumberCard"
@@ -102,7 +102,7 @@ def handle_postback(event):
     
 
     if(question==QUESTION_TYPE[0]):#type:start
-        if(answer==ANSWER[QUESTION_TYPE[0]["引っ越し手続き"]]): #answer:moving
+        if(answer==ANSWER[question]["引っ越し手続き"]): #answer:moving
             sql = f"""
                 INSERT INTO {TRANSACTION_TABLE}({C_USERID},{C_QUESTION_TYPE},{C_AT_DATETIME},{C_ANSWER})
                 VALUES('{user_id}','{question}', CURRENT_TIMESTAMP, '{answer}');
@@ -127,10 +127,10 @@ def handle_postback(event):
             #返信
             line_bot_api.reply_message(rt,messages=message)
 
-        elif(answer==ANSWER[QUESTION_TYPE[0]["住民票発行"]]): #answer:issueResidentCart
+        elif(answer==ANSWER[question]["住民票発行"]): #answer:issueResidentCart
             #未定
             return
-        elif(answer[1]==ANSWER[QUESTION_TYPE[0]["マイナンバーカードの発行"]]): #answer:issueMyNumber
+        elif(answer[1]==ANSWER[question]["マイナンバーカードの発行"]): #answer:issueMyNumber
             #未定
             return
 
