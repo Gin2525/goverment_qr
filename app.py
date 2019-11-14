@@ -38,8 +38,7 @@ C_ANSWER = "answer"
 
 QUESTION_TYPE=[
     "start",
-    "question_NM",
-    "question_NF",
+    "question_n", #n は 1から nは小文字
     "attend_date",
     "confirm",
 ]
@@ -49,8 +48,8 @@ ANSWER ={
         "住民票発行":"issueResidentCart",
         "マイナンバーカードの発行":"issueMyNumberCard"
     },
-    "question_NM":{
-        "引っ越し手続き_質問0":"moving0"
+    "question_n":{
+        "引っ越し手続き_質問1":"moving_1"
     }
 
 }
@@ -139,7 +138,6 @@ def handle_postback(event):
 
             with conn.cursor() as cur:
                 cur.execute(sql)
-
             message = TemplateSendMessage(
                 alt_text='Buttons template',
                 template=ButtonsTemplate(
@@ -148,7 +146,7 @@ def handle_postback(event):
                 actions=[
                     DatetimePickerAction(
                         label='転居予定日の選択',
-                        data=f"question_moving0:{question}0",
+                        data=f"question_n:{question}_1",
                         mode="datetime",
                     )
                 ])
@@ -163,8 +161,9 @@ def handle_postback(event):
             #未定
             line_bot_api.reply_message(rt,messages="続きは開発中です。")
     
+    #moving_1
     if(question==QUESTION_TYPE[1]):
-        if(answer==ANSWER[question]["引っ越し手続き_質問0"]):
+        if(answer==ANSWER[question]["引っ越し手続き_質問1"]):
             #未定
             ### DBに日時を格納する必要あり。
             line_bot_api.reply_message(rt,messages="続きは開発中です。")
