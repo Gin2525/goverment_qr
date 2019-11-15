@@ -1,6 +1,6 @@
 import os
 import sys
-from flask import Flask, request, abort
+from flask import *
 import psycopg2
 from linebot import (
     LineBotApi, WebhookHandler
@@ -50,6 +50,7 @@ ANSWER ={
     },
     "question_n":{
         "引っ越し手続き_質問1":"moving_1",
+        "引っ越し手続き_質問2":"moving_2",
     },
 
 }
@@ -170,9 +171,53 @@ def handle_postback(event):
         #answer:moving_1
         if(answer==ANSWER[question]["引っ越し手続き_質問1"]):
             print("debug:entered 引っ越し手続き_質問1")
-            #未定
-            ### DBに日時を格納する必要あり。
+
+            sql = I_SQL.replace("*u",user_id).replace("*q",question).replace("*a",event.postback.params["datatime"])
+            with conn.cursor() as cur:
+                cur.execute(sql)
+
+            message = TemplateSendMessage(
+                alt_text='Buttons template',
+                template=ButtonsTemplate(
+                title='いつ転居なされる予定ですか？',
+                text='以下よりご選択ください。',
+                actions=[
+                    DatetimePickerAction(
+                        label='転居予定日の選択',
+                        data="question_n:moving_2",
+                        mode="date",
+                    )
+                ])
+            )
+            #返信
+            line_bot_api.reply_message(rt,messages=message)
+
+
             line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中です"))
+        
+        #answer:moving_2
+        elif(answer==ANSWER[question]["引越し手続き_質問2"]):
+            print("debug:entered 引っ越し手続き_質問2")
+
+            sql = I_SQL.replace("*u",user_id).replace("*q",question).replace("*a",event.postback.params["datatime"])
+            with conn.cursor() as cur:
+                cur.execute(sql)
+
+            message = TemplateSendMessage(
+                alt_text='Buttons template',
+                template=ButtonsTemplate(
+                title='お引越し先のご住所をお伝えください。',
+                text='以下よりご入力ください。',
+                actions=[
+                    URIAction(
+                        label='住所を入力',
+                        uri='line://app/1653526331-jJQZGQGJ',
+                        data="question_n:moving_3"
+                    )
+                ])
+            )
+            #返信
+            line_bot_api.reply_message(rt,messages=message)
 
 @handler.add(FollowEvent)
 def handle_follow(event):
@@ -187,7 +232,7 @@ def handle_follow(event):
         text='自分の目的に合うものをご選択ください。',
         actions=[
             PostbackAction(
-                label='引っ越し手続き',
+                label='引っ越し手続き(転出届け)',
                 data='start:moving'
             ),
             PostbackAction(
@@ -212,6 +257,11 @@ def handle_follow(event):
 
 # @handler.add(UnfollowEvent):
 #     #DBからアンフォローしたユーザのトランザクションデータを全て削除。
+
+#LIFF
+@app.route("/enter_address")
+def display_liff():
+    return render_template("enter_address.html")
 
 
 if __name__ == "__main__":
