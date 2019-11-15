@@ -6,24 +6,11 @@
     <title>住所入力</title>
 </head>
 <body>
-    <p id="userIdField"></p>
+    <button id="closeButton">押すな</button>
+
+    
     <!-- LIFF SDK の読み込み -->
     <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
-    <script>
-        window.onload = function (e) {
-        // init で初期化。基本情報を取得。
-        // https://developers.line.me/ja/reference/liff/#initialize-liff-app
-            liff.init(function (data){
-                getProfile();
-            });
-        };
-
-        function getProfile(){
-            liff.getProfile().then(function (profile){
-                document.getElementById('userIdField').textContent=profile.userId;
-            });
-        }
-
-    </script>
+    <script src="static/js/liff_byTakao.js"></script>
 </body>
 </html>

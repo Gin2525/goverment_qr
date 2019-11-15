@@ -62,8 +62,8 @@ I_SQL = f"""
 #以下、Flask web app
 app = Flask(__name__)
 
-CHANNEL_ACCESS_TOKEN = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
-CHANNEL_SECRET = os.environ['LINE_CHANNEL_SECRET']
+CHANNEL_ACCESS_TOKEN = "lFl6Qfb1LlSds5DSMSnt1e2dc+o5DnymdAEWECCEnCMgLw0PiFVJ9ny3hs1tes5fOtE+gG6P7fxJd42bfRnMaR/h2LB/oj5SBLmG/Ah51CTykpdIxr+W/nBuP0HYKC18f1k5+i5qvd6JXQTl7AHmBQdB04t89/1O/w1cDnyilFU="#os.environ['LINE_CHANNEL_ACCESS_TOKEN']
+CHANNEL_SECRET = "5ab046b03214bd09c3162a124a3ad784"#os.environ['LINE_CHANNEL_SECRET']
 
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
