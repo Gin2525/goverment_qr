@@ -172,7 +172,7 @@ def handle_postback(event):
         if(answer==ANSWER[question]["引っ越し手続き_質問1"]):
             print("debug:entered 引っ越し手続き_質問1")
 
-            sql = I_SQL.replace("*u",user_id).replace("*q",answer).replace("*a",event.postback["params"]["date"]) #answerは分かりにくいが、moving_1を格納しないといけないのでこうなる。
+            sql = I_SQL.replace("*u",user_id).replace("*q",answer).replace("*a",event.postback.params["date"]) #answerは分かりにくいが、moving_1を格納しないといけないのでこうなる。
             with conn.cursor() as cur:
                 cur.execute(sql)
 
