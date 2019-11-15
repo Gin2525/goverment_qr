@@ -136,7 +136,7 @@ def handle_postback(event):
     #type:start
     if(question==QUESTION_TYPE[0]):
         if(answer==ANSWER[question]["引っ越し手続き"]): #answer:moving
-            sql = I_SQL.replace("*u",user_id).replace("*q",question).replace("*a",answer)
+            sql = I_SQL.replace("*u",user_id).replace("*q",answer).replace("*a",answer) #どちらにもstartのインスタンスが入る。
 
             with conn.cursor() as cur:
                 cur.execute(sql)
@@ -169,37 +169,10 @@ def handle_postback(event):
     #type:question_n
     if(question==QUESTION_TYPE[1]):
         #answer:moving_1
-        if(answer==ANSWER[question]["引っ越し手続き_質問1"]):
+        if(answer==ANSWER[question]["引越し手続き_質問1"]):
             print("debug:entered 引っ越し手続き_質問1")
 
-            sql = I_SQL.replace("*u",user_id).replace("*q",question).replace("*a",event.postback.params["datatime"])
-            with conn.cursor() as cur:
-                cur.execute(sql)
-
-            message = TemplateSendMessage(
-                alt_text='Buttons template',
-                template=ButtonsTemplate(
-                title='いつ転居なされる予定ですか？',
-                text='以下よりご選択ください。',
-                actions=[
-                    DatetimePickerAction(
-                        label='転居予定日の選択',
-                        data="question_n:moving_2",
-                        mode="date",
-                    )
-                ])
-            )
-            #返信
-            line_bot_api.reply_message(rt,messages=message)
-
-
-            line_bot_api.reply_message(rt,TextSendMessage(text="続きは開発中です"))
-        
-        #answer:moving_2
-        elif(answer==ANSWER[question]["引越し手続き_質問2"]):
-            print("debug:entered 引っ越し手続き_質問2")
-
-            sql = I_SQL.replace("*u",user_id).replace("*q",question).replace("*a",event.postback["params"]["date"])
+            sql = I_SQL.replace("*u",user_id).replace("*q",answer).replace("*a",event.postback["params"]["date"]) #answerは分かりにくいが、moving_1を格納しないといけないのでこうなる。
             with conn.cursor() as cur:
                 cur.execute(sql)
 
@@ -212,12 +185,16 @@ def handle_postback(event):
                     URIAction(
                         label='住所を入力',
                         uri='line://app/1653526331-jJQZGQGJ',
-                        data="question_n:moving_3"
+                        data="question_n:moving_2"
                     )
                 ])
             )
             #返信
             line_bot_api.reply_message(rt,messages=message)
+        
+        #answer:moving_2
+        elif(answer==ANSWER[question]["引越し手続き_質問2"]):
+            line_bot_api.reply_message(rt,messages="ただいま開発中。")
 
 @handler.add(FollowEvent)
 def handle_follow(event):
