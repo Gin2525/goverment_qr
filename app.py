@@ -236,7 +236,7 @@ def handle_follow(event):
 #     #DBからアンフォローしたユーザのトランザクションデータを全て削除。
 
 #LIFF
-@app.route("/enter_address")
+@app.route("/enter_address",methods=["GET","POST"])
 def display_liff():
     return render_template("enter_address.html")
 
