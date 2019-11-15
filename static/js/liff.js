@@ -1,17 +1,17 @@
-window.onload = function initializeLiff(myLiffId) {
-    liff
-        .init({
-            liffId: myLiffId
-        })
-        .then(() => {
-            // start to use LIFF's api
-            initializeApp();
-        })
-        .catch((err) => {
-            document.getElementById("liffAppContent").classList.add('hidden');
-            document.getElementById("liffInitErrorMessage").classList.remove('hidden');
-        });
-}
+// window.onload = function initializeLiff(myLiffId) {
+//     liff
+//         .init({
+//             liffId: myLiffId
+//         })
+//         .then(() => {
+//             // start to use LIFF's api
+//             initializeApp();
+//         })
+//         .catch((err) => {
+//             document.getElementById("liffAppContent").classList.add('hidden');
+//             document.getElementById("liffInitErrorMessage").classList.remove('hidden');
+//         });
+// }
 
 // document.getElementById('getProfileButton').addEventListener('click', function() {
 //     liff.getProfile().then(function(profile) {
