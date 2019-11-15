@@ -6,13 +6,6 @@
         <!--<link rel="stylesheet" href="style.css">-->
     </head>
     <body>
-        <button id="getProfileButton">押すな。</button>
-        <div id="profilePictureDiv">
-        </div>
-        <p id="userIdProfileField"></p>
-        <p id="displayNameField"></p>
-        <p id="statusMessageField"></p>
-        <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
         <script>
                 const idSPace = document.getElementById('id');
                 const errorSpace = document.getElementById('error');
@@ -30,5 +23,12 @@
 
             document.getElementById('getProfileButton').addEventListener('click',liff.closeWindow());
         </script>
+        <button id="getProfileButton">押すな。</button>
+        <div id="profilePictureDiv">
+        </div>
+        <p id="userIdProfileField"></p>
+        <p id="displayNameField"></p>
+        <p id="statusMessageField"></p>
+        <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
     </body>
 </html>
