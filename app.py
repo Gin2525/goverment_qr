@@ -53,6 +53,10 @@ ANSWER ={
     },
 
 }
+I_SQL = f"""
+            INSERT INTO {TRANSACTION_TABLE}({C_USERID},{C_QUESTION_TYPE},{C_AT_DATETIME},{C_ANSWER})
+            VALUES('*u', '*q', CURRENT_TIMESTAMP, '*a');
+        """
 
 #以下、Flask web app
 app = Flask(__name__)
@@ -131,10 +135,7 @@ def handle_postback(event):
     #type:start
     if(question==QUESTION_TYPE[0]):
         if(answer==ANSWER[question]["引っ越し手続き"]): #answer:moving
-            sql = f"""
-                INSERT INTO {TRANSACTION_TABLE}({C_USERID},{C_QUESTION_TYPE},{C_AT_DATETIME},{C_ANSWER})
-                VALUES('{user_id}','{question}', CURRENT_TIMESTAMP, '{answer}');
-            """
+            sql = I_SQL.replace("*u",user_id).replace("*q",question).replace("*a",answer)
 
             with conn.cursor() as cur:
                 cur.execute(sql)
@@ -166,6 +167,7 @@ def handle_postback(event):
     
     #type:question_n
     if(question==QUESTION_TYPE[1]):
+        #answer:moving_1
         if(answer==ANSWER[question]["引っ越し手続き_質問1"]):
             print("debug:entered 引っ越し手続き_質問1")
             #未定
