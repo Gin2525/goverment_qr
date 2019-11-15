@@ -14,20 +14,19 @@
         <p id="statusMessageField"></p>
         <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
         <script>
-            window.onload = function initializeLiff(myLiffId) {
-                liff
-                    .init({
-                        liffId: myLiffId
-                    })
-                    .then(() => {
-                        // start to use LIFF's api
-                        initializeApp();
-                    })
-                    .catch((err) => {
-                        document.getElementById("liffAppContent").classList.add('hidden');
-                        document.getElementById("liffInitErrorMessage").classList.remove('hidden');
-                    });
-            }
+            const idSPace = document.getElementById('id');
+            const errorSpace = document.getElementById('error');
+
+            //liff init
+            liff.init(
+                data => {
+                    const userId = data.context.userId;
+                    idSPace.innerText = userId;
+                },
+                err => {
+                    console.log('error', err);
+                }
+            );
 
             document.getElementById('getProfileButton').addEventListener('click', function() {
                 liff.getProfile().then(function(profile) {
