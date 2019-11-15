@@ -169,7 +169,7 @@ def handle_postback(event):
     #type:question_n
     if(question==QUESTION_TYPE[1]):
         #answer:moving_1
-        if(answer==ANSWER[question]["引越し手続き_質問1"]):
+        if(answer==ANSWER[question]["引っ越し手続き_質問1"]):
             print("debug:entered 引っ越し手続き_質問1")
 
             sql = I_SQL.replace("*u",user_id).replace("*q",answer).replace("*a",event.postback["params"]["date"]) #answerは分かりにくいが、moving_1を格納しないといけないのでこうなる。
