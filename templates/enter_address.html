@@ -13,13 +13,15 @@
         window.onload = function (e) {
         // init で初期化。基本情報を取得。
         // https://developers.line.me/ja/reference/liff/#initialize-liff-app
-            liff.init();
-            getProfile();
+            liff.init(function (data){
+                getProfile();
+            });
         };
 
         function getProfile(){
-            userId=liff.getProfile().userId;
-            document.getElementById('userIdField').textContent=userId;
+            liff.getProfile().then(function (profile){
+                document.getElementById('userIdField').textContent=profile.userId;
+            });
         }
 
     </script>
