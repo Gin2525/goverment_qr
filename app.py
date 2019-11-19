@@ -292,7 +292,7 @@ def handle_postback(event):
             qr_data["receiveDay"] = results[3][1]
 
             now = datetime.now()
-            path = "./img/"
+            path = "https://goverment-qr-mock.herokuapp.com/img/"
             filename = now.isoformat() + user_id + ".png"
             img = qrcode.make(qr_data)
             print(type(img))
