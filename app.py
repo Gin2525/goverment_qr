@@ -3,6 +3,8 @@ import sys
 from flask import *
 import psycopg2
 import tools
+from datetime import datetime
+import qrcode
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -23,6 +25,7 @@ from linebot.models import (
     FlexSendMessage, BubbleContainer, ImageComponent, BoxComponent,
     TextComponent, SpacerComponent, IconComponent, ButtonComponent,
     SeparatorComponent, QuickReply, QuickReplyButton,
+    ImageSendMessage,
 )
 ####
 # DBとのコネクション
@@ -60,7 +63,7 @@ ANSWER ={
         "引越し手続き_質問2":"moving_2",
         "引越し手続き_質問3":"moving_3"
     },
-    "cofirm":{
+    "confirm":{
         "引越し手続き":"moving_end",
     },
 }
@@ -251,7 +254,8 @@ def handle_postback(event):
             )
             message = FlexSendMessage(alt_text="入力内容を確認",contents=bubble)
             line_bot_api.push_message(to=user_id,messages=message)
-            #確認メッセ
+
+            #確認メッセ confirm_moving
             confirm_message = TemplateSendMessage(
                 alt_text='Confirm template',
                 template=ConfirmTemplate(
@@ -259,7 +263,7 @@ def handle_postback(event):
                     actions=[
                         PostbackAction(
                             label='OK',
-                            data='cofirm:moving_end'
+                            data='confirm:moving_end'
                         ),
                         PostbackAction(
                             label='取り消し',
@@ -272,6 +276,33 @@ def handle_postback(event):
             line_bot_api.reply_message(rt,confirm_message)
 
     #type:confirm
+    if(question==QUESTION_TYPE[2]):
+        #confirm:moving_end
+        if(answer==ANSWER[question]["引越し手続き"]):
+            #引越しに関するクエリを実行
+            sql = LAST_SQL.replace("*u",user_id).replace("*qt","moving")
+            with conn.cursor() as cur:
+                cur.execute(sql)
+                results = cur.fetchall()
+
+            qr_data=dict()
+            qr_data["purpose"] = results[0][1]
+            qr_data["movingOutDay"] = results[1][1]
+            qr_data["fullAddress"] = results[2][1]
+            qr_data["receiveDay"] = results[3][1]
+
+            now = datetime.now()
+            path = "./img/"
+            filename = now.isoformat() + user_id + ".png"
+            img = qrcode.make(qr_data)
+            print(type(img))
+            img.save(path + filename)
+            
+            image_message = ImageSendMessage(
+                original_content_url=path+filename,
+                preview_image_url=path+filename
+            )
+            line_bot_api.reply_message(rt,messages=image_message)
     
 @handler.add(FollowEvent)
 def handle_follow(event):
