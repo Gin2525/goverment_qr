@@ -44,13 +44,14 @@ QUESTION_TYPE=[
 ]
 ANSWER ={
     "start":{
-        "引っ越し手続き":"moving",
+        "引越し手続き":"moving",
         "住民票発行":"issueResidentCard",
         "マイナンバーカードの発行":"issueMyNumberCard"
     },
     "question_n":{
-        "引っ越し手続き_質問1":"moving_1",
-        "引っ越し手続き_質問2":"moving_2",
+        "引越し手続き_質問1":"moving_1",
+        "引越し手続き_質問2":"moving_2",
+        "引越し手続き_質問3":"moving_3"
     },
 
 }
@@ -96,6 +97,12 @@ def handle_message(event):
         return 
     
     if event.message.text=="最初から" or event.message.text == "さいしょから":
+        user_id = event.source.user_id
+        #DBからこれまでのトランザクションを削除
+        sql = f"DELETE FROM {TRANSACTION_TABLE} WHERE {C_USERID}='{user_id}'"
+        with conn.cursor() as cur:
+            cur.execute(sql)
+
         #ボタンテンプレートメッセージを作成
         buttons_template_message = TemplateSendMessage(
             alt_text='Buttons template',
@@ -104,7 +111,7 @@ def handle_message(event):
             text='自分の目的に合うものをご選択ください。',
             actions=[
                 PostbackAction(
-                    label='引っ越し手続き',
+                    label='引越し手続き(転出届)',
                     data='start:moving'
                 ),
                 PostbackAction(
@@ -125,17 +132,16 @@ def handle_message(event):
             TextSendMessage(text="最初から選び直したいときは\n「最初から」or「さいしょから」\nと入力してください。")
         )
 
-
 @handler.add(PostbackEvent)
 def handle_postback(event):
     rt = event.reply_token
     user_id = event.source.user_id
-    print(f"[debug:{event.postback.data}]")
+    print(f"debug log -> {event.postback.data}")
     question,answer = event.postback.data.split(':') #':'で文字列を分解し、[questionType,answer]　で分ける。
     
     #type:start
     if(question==QUESTION_TYPE[0]):
-        if(answer==ANSWER[question]["引っ越し手続き"]): #answer:moving
+        if(answer==ANSWER[question]["引越し手続き"]): #answer:moving
             sql = I_SQL.replace("*u",user_id).replace("*q",answer).replace("*a",answer) #どちらにもstartのインスタンスが入る。
 
             with conn.cursor() as cur:
@@ -169,8 +175,8 @@ def handle_postback(event):
     #type:question_n
     if(question==QUESTION_TYPE[1]):
         #answer:moving_1
-        if(answer==ANSWER[question]["引っ越し手続き_質問1"]):
-            print("debug:entered 引っ越し手続き_質問1")
+        if(answer==ANSWER[question]["引越し手続き_質問1"]):
+            print("debug:entered 引越し手続き_質問1")
 
             sql = I_SQL.replace("*u",user_id).replace("*q",answer).replace("*a",event.postback.params["date"]) #answerは分かりにくいが、moving_1を格納しないといけないのでこうなる。
             with conn.cursor() as cur:
@@ -192,9 +198,9 @@ def handle_postback(event):
             #返信
             line_bot_api.reply_message(rt,messages=message)
         
-        #answer:moving_2
-        elif(answer==ANSWER[question]["引越し手続き_質問2"]):
-            line_bot_api.reply_message(rt,messages="ただいま開発中。")
+        #answer:moving_3
+        elif(answer==ANSWER[question]["引越し手続き_質問3"]):
+            line_bot_api.reply_message(rt,TextSendMessage(text="ここは開発中。。。"))
 
 @handler.add(FollowEvent)
 def handle_follow(event):
@@ -209,7 +215,7 @@ def handle_follow(event):
         text='自分の目的に合うものをご選択ください。',
         actions=[
             PostbackAction(
-                label='引っ越し手続き(転出届け)',
+                label='引越し手続き(転出届け)',
                 data='start:moving'
             ),
             PostbackAction(
@@ -240,6 +246,42 @@ def handle_follow(event):
 def display_liff():
     return render_template("enter_address.html")
 
+#moving_2のハンドラ
+@app.route("/recieve_address",methods=["POST"])
+def recieve_liff():
+    ##受け取った情報をDBに格納。
+    user_id = request.form["user_id"]
+    answer = request.form["answer"]
+    zipcode = request.form["zipcode"]
+    street_address = request.form["streetAddress"]
+    address = request.form["address"]
+    fullAddress = f"{zipcode} {street_address} {address}"
+
+    sql = I_SQL.replace("*u",user_id).replace("*q",answer).replace("*a",fullAddress)
+
+    with conn.cursor() as cur:
+        cur.execute(sql)
+
+    message = TemplateSendMessage(
+                alt_text='Buttons template',
+                template=ButtonsTemplate(
+                title='いつ市役所にはお越しになりますか？',
+                text='以下よりご選択ください。',
+                actions=[
+                    DatetimePickerAction(
+                        label='日時選択',
+                        data=f"question_n:moving_3",
+                        mode="datetime",
+                    )
+                ])
+            )
+    #APIの返り値による例外処理を無視したいので、一旦関数に入れ込む。
+    push_message(user_id,message)
+    return "OK"
+    
+    
+def push_message(to,message):
+    line_bot_api.push_message(to,messages=message)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

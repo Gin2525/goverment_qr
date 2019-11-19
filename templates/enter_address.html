@@ -6,11 +6,44 @@
     <title>住所入力</title>
 </head>
 <body>
-    <button id="closeButton">押すな</button>
+    <div id="inputField">
+        <p>*デモ版です。下のボタンを押さないとuserIDが
+            こちらに届かないので、動きません。押してくださいね。</p>
+        <button id="displayButton">userIDを送信することを承諾。</button>
+        <br>
+        <p id="userIdField"></p>
+        <form action="https://983fe846.ngrok.io/recieve_address" method="POST">
+            郵便番号 ->
+            <input required type="number" id="zipcode" name="zipcode" onKeyUp="AjaxZip3.zip2addr(this,'','streetAddress','streetAddress');">
+            <br>
+            <p>※ハイフン無しで！</p>
+            住所 ->
+            <input required type="text" id="streetAddress" name="streetAddress">
+            <br>
+            番地 ->
+            <input required id="address" type="text" name="address">
+            <br>
+            <!--questionとanswerを無理やり渡したい。-->
+            <input type="hidden" name ="question" value="question_n">
+            <input type="hidden" name="answer" value="moving_2">
+            <!--hiddenでIDも渡す。-->
+            <input required hidden type="text" id="userId" name="user_id" >
+            <!--送信ボタン。-->
+            <button type="submit" id="sendButton">確定</button>
+        </form>
+        <font color="red"><p id="errorP"></p></font>
+        <button id="closeButton">閉じる</button>
+    </div>
 
     
     <!-- LIFF SDK の読み込み -->
     <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+    <!--俺が作ったjs実行系-->
     <script src="static/js/liff_byTakao.js"></script>
+    <script>
+        
+    </script>
+    <!--郵政のやつ-->
+    <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 </body>
 </html>
