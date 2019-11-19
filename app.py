@@ -2,6 +2,7 @@ import os
 import sys
 from flask import *
 import psycopg2
+import tools
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -10,11 +11,18 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
-    MessageAction, QuickReply, QuickReplyButton,
-    FollowEvent,UnfollowEvent,
-    PostbackEvent,PostbackAction,
-    URIAction,ButtonsTemplate,TemplateSendMessage,
-    DatetimePickerAction,
+    SourceUser, SourceGroup, SourceRoom,
+    TemplateSendMessage, ConfirmTemplate, MessageAction,
+    ButtonsTemplate, ImageCarouselTemplate, ImageCarouselColumn, URIAction,
+    PostbackAction, DatetimePickerAction,
+    CameraAction, CameraRollAction, LocationAction,
+    CarouselTemplate, CarouselColumn, PostbackEvent,
+    StickerMessage, StickerSendMessage, LocationMessage, LocationSendMessage,
+    ImageMessage, VideoMessage, AudioMessage, FileMessage,
+    UnfollowEvent, FollowEvent, JoinEvent, LeaveEvent, BeaconEvent,
+    FlexSendMessage, BubbleContainer, ImageComponent, BoxComponent,
+    TextComponent, SpacerComponent, IconComponent, ButtonComponent,
+    SeparatorComponent, QuickReply, QuickReplyButton,
 )
 ####
 # DBとのコネクション
@@ -39,7 +47,6 @@ C_ANSWER = "answer"
 QUESTION_TYPE=[
     "start",
     "question_n", #n は 1から nは小文字
-    "attend_date",
     "confirm",
 ]
 ANSWER ={
@@ -53,8 +60,22 @@ ANSWER ={
         "引越し手続き_質問2":"moving_2",
         "引越し手続き_質問3":"moving_3"
     },
-
+    "cofirm":{
+        "引越し手続き":"moving_end",
+    },
 }
+
+LAST_SQL=f"""SELECT {C_QUESTION_TYPE}, {C_ANSWER} FROM {TRANSACTION_TABLE}
+            WHERE '*u'={C_USERID}
+            AND {C_AT_DATETIME} IN (
+                SELECT MAX({C_AT_DATETIME}) FROM {TRANSACTION_TABLE} 
+                WHERE '*u'={C_USERID}
+                AND {C_QUESTION_TYPE} LIKE '*qt%'
+                GROUP BY {C_QUESTION_TYPE}
+            )
+            ORDER BY {C_AT_DATETIME} ASC;
+            """
+
 I_SQL = f"""
             INSERT INTO {TRANSACTION_TABLE}({C_USERID},{C_QUESTION_TYPE},{C_AT_DATETIME},{C_ANSWER})
             VALUES('*u', '*q', CURRENT_TIMESTAMP, '*a');
@@ -185,7 +206,7 @@ def handle_postback(event):
             message = TemplateSendMessage(
                 alt_text='Buttons template',
                 template=ButtonsTemplate(
-                title='お引越し先のご住所をお伝えください。',
+                title='お引越し先のご住所はどちらですか？',
                 text='以下よりご入力ください。',
                 actions=[
                     URIAction(
@@ -200,8 +221,58 @@ def handle_postback(event):
         
         #answer:moving_3
         elif(answer==ANSWER[question]["引越し手続き_質問3"]):
-            line_bot_api.reply_message(rt,TextSendMessage(text="ここは開発中。。。"))
+            sql = I_SQL.replace("*u",user_id).replace("*q",answer).replace("*a",event.postback.params["datetime"])
+            with conn.cursor() as cur:
+                cur.execute(sql)
 
+            sql = LAST_SQL.replace("*u",user_id).replace("*qt","moving")
+
+            with conn.cursor() as cur:
+                cur.execute(sql)
+                results = cur.fetchall()
+
+            #フレックスで入力内容を確認。
+            bubble = BubbleContainer(
+                #左から右に文章が進むように設定
+                direction = 'ltr',
+                body = BoxComponent(
+                    layout = 'vertical',
+                    contents = [
+                        #title
+                        TextComponent(text = '入力内容の確認',weight = 'bold',size = 'xxl'),
+                        SeparatorComponent(margin = 'lg'),
+                        BoxComponent(
+                            layout = 'vertical',
+                            margin = 'lg',
+                            contents = tools.box_gen(results)
+                        ),
+                    ]
+                ),
+            )
+            message = FlexSendMessage(alt_text="入力内容を確認",contents=bubble)
+            line_bot_api.push_message(to=user_id,messages=message)
+            #確認メッセ
+            confirm_message = TemplateSendMessage(
+                alt_text='Confirm template',
+                template=ConfirmTemplate(
+                    text='入力に問題はないですか?',
+                    actions=[
+                        PostbackAction(
+                            label='OK',
+                            data='cofirm:moving_end'
+                        ),
+                        PostbackAction(
+                            label='取り消し',
+                            #訂正についてはまだ未実装。
+                            data='correct:moving_end'
+                        )
+                    ]
+                )
+            )
+            line_bot_api.reply_message(rt,confirm_message)
+
+    #type:confirm
+    
 @handler.add(FollowEvent)
 def handle_follow(event):
     reply_token = event.reply_token
@@ -231,13 +302,6 @@ def handle_follow(event):
 
     line_bot_api.reply_message(reply_token, messages=buttons_template_message)
 
-    # sql = f"""
-    # INSERT INTO {TABLE_NAME}({C_USERID},{C_USERID},{C_QUESTION_TYPE},{C_AT_DATETIME})
-    # VALUES ('{userID}','{}');
-    # """
-    # with conn.cursor() as cur:
-    #     cur.execute(sql)
-
 # @handler.add(UnfollowEvent):
 #     #DBからアンフォローしたユーザのトランザクションデータを全て削除。
 
@@ -255,7 +319,7 @@ def recieve_liff():
     zipcode = request.form["zipcode"]
     street_address = request.form["streetAddress"]
     address = request.form["address"]
-    fullAddress = f"{zipcode} {street_address} {address}"
+    fullAddress = f"{zipcode},{street_address},{address}"
 
     sql = I_SQL.replace("*u",user_id).replace("*q",answer).replace("*a",fullAddress)
 

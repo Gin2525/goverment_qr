@@ -9,15 +9,21 @@ window.onload = function (e) {
                 liff.closeWindow();
             });
             document.getElementById("sendButton").addEventListener('click',function(){
-                userId = document.getElementById("userIdField").textContent
-                errorP = document.getElementById("errorP")
-                zipcode = document.getElementById("zipcode").value
-                address = document.getElementById("streetAddress").value
+                userId = document.getElementById("userIdField").textContent;
+                errorP1 = document.getElementById("errorP1");
+                errorP2 = document.getElementById("errorP2");
+                zipcode = document.getElementById("zipcode").value;
+                address = document.getElementById("streetAddress").value;
 
-                if(userId!="" | zipcode.length==7 || address!=""){
-                    liff.closeWindow();
+                if(zipcode.length!=7 || address=="" || streetAddress==""){
+                    errorP1.textContent = "入力値が誤ってませんか？";
+                    if(userId=="")
+                        errorP2.textContent = "ユーザーIDの送信が承諾されてません！";
+                }else if(userId==""){
+                    errorP1.textContent= "";
+                    errorP2.textContent = "ユーザーIDの送信が承諾されてません！";
                 }else{
-                    errorP.textContent = "ちゃんとボタンは押しましたか？\n入力値が誤ってませんか？";
+                    liff.closeWindow();
                 }
             });
         });
