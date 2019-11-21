@@ -8,7 +8,24 @@
 .inputArea{
     width:100%;
     margin:0 auto;
-    height:12%;
+    height:7%;
+    border-radius:5px ; 
+}
+#inputform{
+    width:100%;
 }
 #sendButton{
+    height: 8%;
+    width:80%;
+    margin:3% 10%;
+    border-radius:7px ; 
+}
+#idChecker{
+    margin:0px;
+    padding:0px;
+}
+
+#checkArea{
+    margin-top: 0px;
+    width:100%;
 }

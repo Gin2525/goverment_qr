@@ -324,10 +324,13 @@ def handle_postback(event):
             imagelink = Client.upload_from_path(imagepath, config=None, anon=True)["link"]
             print(f"uploaded to {imagelink}")
 
+
             image_message = ImageSendMessage(
                 original_content_url=imagelink,
                 preview_image_url=imagelink
             )
+            line_bot_api.reply_message(user_id,TextSendMessage(text="予約が完了しました。当日、スタッフにこちらのQRコードをご提示ください。"))
+
             line_bot_api.reply_message(rt, messages=image_message)
 
 
@@ -400,7 +403,7 @@ def recieve_liff():
     )
     # APIの返り値による例外処理を無視したいので、一旦関数に入れ込む。
     push_message(user_id, message)
-    return "OK"
+    return render_template("confirm.html")
 
 
 def push_message(to, message):

@@ -8,19 +8,21 @@
 </head>
 <body>
     <div id="inputField">
-        <p id="describe">*デモ版です。下のボタンを押さないとuserIDが
-            こちらに届かないので、動きません。押してくださいね。</p>
-        <button class="inputArea" id="displayButton">ユーザーIDを送信することを承諾</button>
-        <br>
+        <p id="describe">*デモ版です。下のチェックマークを入れていただかないと<br>
+            userIDがこちらに届かないので動きません。押してくださいね。</p>
         <p id="userIdField"></p>
-        <form action="/recieve_address" method="POST">
-            郵便番号 ->
+        <form action="/recieve_address" method="POST"id="inputform">
+            <p id="checkArea">
+                <input required type=checkbox id="idChecker">  ユーザーIDを送信することを承諾
+            </p>
+            郵便番号(ハイフンは不要)
             <input required class="inputArea" type="number" id="zipcode" name="zipcode" onKeyUp="AjaxZip3.zip2addr(this,'','streetAddress','streetAddress');">
-            <p>※ハイフン無しで！</p>
-            住所 ->
+            <br>
+            住所
             <input required class="inputArea" type="text" id="streetAddress" name="streetAddress">
             <br>
-            番地 ->
+            <br>
+            番地以降
             <input required class="inputArea" id="address" type="text" name="address">
             <br>
             <!--questionとanswerを無理やり渡したい。-->
@@ -30,12 +32,12 @@
             <input required hidden type="text" id="userId" name="user_id">
             <!--送信ボタン。-->
             <br>
-            <button class="inputArea"  type="submit" id="sendButton">確定</button>
+            <button c type="submit" id="sendButton">確定</button>
         </form>
         <font color="red"><p id="errorP1"></p></font>
         <font color="red"><p id="errorP2"></p></font>
         <br>
-        <button id="closeButton">閉じる</button>
+        <!--<button id="closeButton">閉じる</button>-->
     </div>
 
     
