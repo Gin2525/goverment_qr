@@ -3,24 +3,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="static/css/enter_address.css">
     <title>住所入力</title>
 </head>
 <body>
     <div id="inputField">
-        <p>*デモ版です。下のボタンを押さないとuserIDが
+        <p id="describe">*デモ版です。下のボタンを押さないとuserIDが
             こちらに届かないので、動きません。押してくださいね。</p>
-        <button id="displayButton">ユーザーIDを送信することを承諾</button>
+        <button class="inputArea" id="displayButton">ユーザーIDを送信することを承諾</button>
         <br>
         <p id="userIdField"></p>
         <form action="/recieve_address" method="POST">
             郵便番号 ->
-            <input required type="number" id="zipcode" name="zipcode" onKeyUp="AjaxZip3.zip2addr(this,'','streetAddress','streetAddress');">
+            <input required class="inputArea" type="number" id="zipcode" name="zipcode" onKeyUp="AjaxZip3.zip2addr(this,'','streetAddress','streetAddress');">
             <p>※ハイフン無しで！</p>
             住所 ->
-            <input required type="text" id="streetAddress" name="streetAddress">
+            <input required class="inputArea" type="text" id="streetAddress" name="streetAddress">
             <br>
             番地 ->
-            <input required id="address" type="text" name="address">
+            <input required class="inputArea" id="address" type="text" name="address">
             <br>
             <!--questionとanswerを無理やり渡したい。-->
             <input type="hidden" name ="question" value="question_n">
@@ -28,10 +29,12 @@
             <!--hiddenでuserIDも渡す。-->
             <input required hidden type="text" id="userId" name="user_id">
             <!--送信ボタン。-->
-            <button type="submit" id="sendButton">確定</button>
+            <br>
+            <button class="inputArea"  type="submit" id="sendButton">確定</button>
         </form>
         <font color="red"><p id="errorP1"></p></font>
         <font color="red"><p id="errorP2"></p></font>
+        <br>
         <button id="closeButton">閉じる</button>
     </div>
 

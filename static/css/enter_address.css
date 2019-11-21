@@ -1,0 +1,14 @@
+#describe {
+    font-size: 100%;
+}
+#inputField{
+    width:60%;
+    margin:0 auto;
+}
+.inputArea{
+    width:100%;
+    margin:0 auto;
+    height:12%;
+}
+#sendButton{
+}
