@@ -22,8 +22,6 @@ window.onload = function (e) {
                 }else if(userId==""){
                     errorP1.textContent= "";
                     errorP2.textContent = "ユーザーIDの送信が承諾されてません！";
-                }else{
-                    liff.closeWindow();
                 }
             });
         });
