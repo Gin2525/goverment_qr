@@ -329,7 +329,7 @@ def handle_postback(event):
                 original_content_url=imagelink,
                 preview_image_url=imagelink
             )
-            line_bot_api.reply_message(user_id,TextSendMessage(text="予約が完了しました。当日、スタッフにこちらのQRコードをご提示ください。"))
+            line_bot_api.push_message(user_id,TextSendMessage(text="予約が完了しました。当日、スタッフにこちらのQRコードをご提示ください。"))
 
             line_bot_api.reply_message(rt, messages=image_message)
 
