@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
         <button id="displayButton">ユーザーIDを送信することを承諾</button>
         <br>
         <p id="userIdField"></p>
-        <form action="https://goverment-qr-mock.herokuapp.com/recieve_address" method="POST">
+        <form action="/recieve_address" method="POST">
             郵便番号 ->
             <input required type="number" id="zipcode" name="zipcode" onKeyUp="AjaxZip3.zip2addr(this,'','streetAddress','streetAddress');">
             <p>※ハイフン無しで！</p>
@@ -25,7 +25,7 @@
             <!--questionとanswerを無理やり渡したい。-->
             <input type="hidden" name ="question" value="question_n">
             <input type="hidden" name="answer" value="moving_2">
-            <!--hiddenでIDも渡す。-->
+            <!--hiddenでuserIDも渡す。-->
             <input required hidden type="text" id="userId" name="user_id">
             <!--送信ボタン。-->
             <button type="submit" id="sendButton">確定</button>
@@ -40,9 +40,6 @@
     <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
     <!--俺が作ったjs実行系-->
     <script src="static/js/liff_byTakao.js"></script>
-    <script>
-        
-    </script>
     <!--郵政のやつ-->
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 </body>

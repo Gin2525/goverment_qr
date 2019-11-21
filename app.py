@@ -5,6 +5,7 @@ import psycopg2
 import tools
 from datetime import datetime
 import qrcode
+from imgurpython import ImgurClient
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -27,6 +28,14 @@ from linebot.models import (
     SeparatorComponent, QuickReply, QuickReplyButton,
     ImageSendMessage,
 )
+
+###
+# imgur 
+CLIENT_ID = "11c33d95d3e8ffe"
+CLIENT_SERCRET = "3f81c51cc9611fb18a74b653d26a7126e688e90d"
+Client = ImgurClient(CLIENT_ID,CLIENT_SERCRET)
+
+
 ####
 # DBとのコネクション
 conn = psycopg2.connect(
@@ -304,15 +313,20 @@ def handle_postback(event):
             qr_data["receiveDay"] = results[3][1]
 
             now = datetime.now()
-            path = "https://goverment-qr-mock.herokuapp.com/img/"
-            filename = now.isoformat() + user_id + ".png"
+            path = "./img/"
+            imagename = now.isoformat() + user_id + ".png"
+            imagepath = path + imagename
+
             img = qrcode.make(qr_data)
             print(type(img))
-            img.save(path + filename)
+            img.save(imagepath)
+            
+            imagelink = Client.upload_from_path(imagepath, config=None, anon=True)["link"]
+            print(f"uploaded to {imagelink}")
 
             image_message = ImageSendMessage(
-                original_content_url=path+filename,
-                preview_image_url=path+filename
+                original_content_url=imagelink,
+                preview_image_url=imagelink
             )
             line_bot_api.reply_message(rt, messages=image_message)
 
