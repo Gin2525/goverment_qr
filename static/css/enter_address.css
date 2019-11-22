@@ -4,24 +4,25 @@ body{
 }
 .cp_submit {
     position: relative;
-	width: 27.33%;
+	width: 80%;
     padding: 20px 3%;
     margin: 0px auto;
     height: 6%;
+    text-align:center;
+    
 }
 .cp_button06{
-    margin:0px auto;
     font-size: auto;
 }
 .cp_iptxt {
 	position: relative;
-	width: 100%;
+	width: 95%;
     margin: 40px auto;
     padding:0 20px;
 }
 .cp_ipcheck {
 	position: relative;
-	width: 27.33%;
+	width: 95%;
 	margin: 40px auto;
 }
 .cp_iptxt input[type='text'] {
