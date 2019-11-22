@@ -107,6 +107,10 @@ handler = WebhookHandler(CHANNEL_SECRET)
 # 以下、処理
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return "OK.There is noting!"
+
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
