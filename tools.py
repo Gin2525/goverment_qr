@@ -24,7 +24,8 @@ def gen_box(data):
                     #TextComponent(d[1],size = 'sm',align = 'end',color = '#111111'),
                     TextComponent(title,size = 'sm',flex = 1,color = '#555555'),
                     TextComponent("〒"+zipcode,size = 'sm',align = 'end',color = '#111111'),
-                    TextComponent(streetAddress + address,size = 'sm',align = 'end',color = '#111111'),
+                    TextComponent(streetAddress,size = 'sm',align = 'end',color = '#111111'),
+                    TextComponent(address,size = 'sm',align = 'end',color = '#111111'),
                     SeparatorComponent(margin = 'lg'),
                 ]
             )
