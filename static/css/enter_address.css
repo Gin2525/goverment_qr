@@ -1,10 +1,15 @@
 body{
-    width:100%;
+	margin: 0px auto;
+    width:85%;
     height:100%;
 }
+#input_form{
+	width:100%;
+}
 .cp_submit {
-    position: relative;
-	width: 80%;
+	position: relative;
+	font-family:"ＭＳ ゴシック",sans-serif;
+	width: 100%;
     padding: 20px 3%;
     margin: 0px auto;
     height: 6%;
@@ -12,18 +17,22 @@ body{
     
 }
 .cp_button06{
-    font-size: auto;
+	font-size: auto;
 }
+
 .cp_iptxt {
 	position: relative;
 	width: 100%;
-    margin: 40px auto;
-    padding:0 20px;
+    margin: 25px auto;
+    padding:0px;
 }
 .cp_ipcheck {
 	position: relative;
-	width: 95%;
-	margin: 40px auto;
+	width: 100%;
+	margin-top: 10px;
+}
+.cp_ipcheck span{
+	font-family:"ＭＳ ゴシック",sans-serif;
 }
 .cp_iptxt input[type='text'] {
 	font: 15px/24px sans-serif;
@@ -71,7 +80,7 @@ body{
 	content: '';
 	border-width: 0 1px 1px 1px;
 	border-style: solid;
-	border-color: #da3c41;
+	border-color: #57bc37;
 }
 
 .cp_ipcheck .option-input02 {
@@ -88,15 +97,15 @@ body{
 	color: #ffffff;
 	border: none;
 	outline: none;
-	background: #d7cbcb;
+	background: #def1d1;
 	-webkit-appearance: none;
 	        appearance: none;
 }
 .cp_ipcheck .option-input02:hover {
-	background: #d6a9a9;
+	background: #97e0b8;
 }
 .cp_ipcheck .option-input02:checked {
-	background: #da3c41;
+	background: #57bc37;
 }
 .cp_ipcheck .option-input02:checked::before {
 	font-size: 20px;
@@ -114,7 +123,7 @@ body{
 	content: '';
 	-webkit-animation: click-wave 0.65s;
 	        animation: click-wave 0.65s;
-	background: #da3c41;
+	background: #57bc37;
 }
 .cp_ipcheck .option-input02.radio {
 	border-radius: 50%;
@@ -128,7 +137,7 @@ body{
 }
 .cp_ipcheck .option-input02:disabled {
 	cursor: not-allowed;
-	background: #b8b7b7;
+	background: #b7b8b7;
 }
 .cp_ipcheck .option-input02:disabled::before {
 	font-size: 20px;
@@ -149,10 +158,10 @@ body{
 	line-height: 1.4;
 	cursor: pointer;
 	transition: color .3s cubic-bezier(.02,.01,.47,1),border-color .3s cubic-bezier(.02,.01,.47,1);
-	color: #F06292;
+	color: #5bc06e;
 	background: transparent;
 	overflow: hidden;
-	border: 1px solid #F06292;
+	border: 1px solid #5bc06e;
 	border-radius: 100px;
 	background: #fff;
 }
@@ -168,21 +177,21 @@ body{
 	opacity: 0;
 }
 .cp_button06:before {
-	background: #D81B60;
+	background: #57bc37;
 	-webkit-transform: translate3d(-110%,-10%,0) skewX(-20deg);
 	transform: translate3d(-110%,-10%,0) skewX(-20deg);
 }
 .cp_button06:after {
 	-webkit-transform: translate3d(110%,-10%,0) skewX(-20deg);
 	transform: translate3d(110%,-10%,0) skewX(-20deg);
-	background: #F06292;
+	background: #5bc06e;
 }
 .cp_button06:hover {
 	transition: all 0.5s cubic-bezier(0.02,0.01,0.47,1);
 	box-shadow: 0 1px 6px rgba(0,0,0,0.3);
 	color: #ffffff;
-	background: #E91E63;
-	border: 1px solid #F06292;
+	background: #57bc37;
+	border: 1px solid #5bc06e;
 }
 .cp_button06:hover:after, .cp_button06:hover:before {
 	transition: transform 0.25s cubic-bezier(0.02,0.01,0.47,1),opacity 0.25s cubic-bezier(0.02,0.01,0.47,1);
@@ -192,13 +201,13 @@ body{
 }
 .cp_button06:active {
 	opacity: 0.5;
-	color: #F06292;
+	color: #77be84;
 }
 .cp_button06:focus {
-	border: 1px solid #F06292;
-	color: #F06292;
+	border: 1px solid rgb(123, 187, 117);
+	color:#77be84;
 }
 .cp_button06:focus:hover {
 	color: #ffffff;
-	border: 1px solid #F06292;
+	border: 1px solid #77be84;
 }

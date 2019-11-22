@@ -4,3 +4,5 @@ sample*
 .DS_store
 __pycache__
 .env 
+img/!dummy
+img/*
