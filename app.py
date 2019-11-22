@@ -213,7 +213,7 @@ def handle_postback(event):
                         URIAction(
                             label='住所を入力',
                             # LIFFのURL
-                            uri='line://app/1653562221-8AborYAk',
+                            uri='line://app/1653526331-jJQZGQGJ',
                             data="question_n:moving_2",
                         )
                     ])
