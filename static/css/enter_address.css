@@ -10,14 +10,14 @@ body{
     height: 6%;
 }
 .cp_button06{
-    position: relative;
-    margin:0 34%;
+    margin:0px auto;
     font-size: auto;
 }
 .cp_iptxt {
 	position: relative;
-	width: 27.33%;
-	margin: 40px auto;
+	width: 100%;
+    margin: 40px auto;
+    padding:0 20px;
 }
 .cp_ipcheck {
 	position: relative;
