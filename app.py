@@ -194,13 +194,12 @@ def handle_postback(event):
                 template=ButtonsTemplate(
                     title='いつ転居なされる予定ですか？',
                     text='以下よりご選択ください。',
-                    defaultAction=PostbackAction(data=" ", display_text="転居日を入力しました"),
                     actions=[
                         DatetimePickerAction(
                             label='転居予定日の選択',
                             data=f"question_n:{answer}_1",
                             mode="date",
-                        )
+                        ),
                     ])
             )
             # 返信
@@ -221,6 +220,8 @@ def handle_postback(event):
         # answer:moving_1
         if(answer == ANSWER[question]["引越し手続き_質問1"]):
             print("debug:entered 引越し手続き_質問1")
+            line_bot_api.push_message(user_id, TextSendMessage(
+                text="転居予定日を承りました。"))
 
             sql = I_SQL.replace("*u", user_id).replace("*q", answer).replace(
                 "*a", event.postback.params["date"])  # answerは分かりにくいが、moving_1を格納しないといけないのでこうなる。
@@ -232,14 +233,11 @@ def handle_postback(event):
                 template=ButtonsTemplate(
                     title='お引越し先のご住所はどちらですか？',
                     text='以下よりご入力ください。',
-                    default_action=PostbackAction(
-                        data="", display_text="引越し先の住所を入力しました"),
                     actions=[
-                        
                         URIAction(
                             label='住所を入力',
                             uri='line://app/1653526331-jJQZGQGJ',
-                            data="question_n:moving_2"
+                            data="question_n:moving_2",
                         )
                     ])
             )
@@ -248,6 +246,8 @@ def handle_postback(event):
 
         # answer:moving_3
         elif(answer == ANSWER[question]["引越し手続き_質問3"]):
+            line_bot_api.push_message(user_id, TextSendMessage(
+                    text="市役所の予約日を承りました。"))
             sql = I_SQL.replace("*u", user_id).replace("*q",
                                                        answer).replace("*a", event.postback.params["datetime"])
             with conn.cursor() as cur:
@@ -382,8 +382,12 @@ def display_liff():
 # moving_2のハンドラ
 @app.route("/recieve_address", methods=["POST"])
 def recieve_liff():
+    
     # 受け取った情報をDBに格納。
     user_id = request.form["user_id"]
+    #ついでに返信
+    line_bot_api.push_message(user_id, TextSendMessage(
+        text="入力されたご住所を承りました。"))
     answer = request.form["answer"]
     zipcode = request.form["zipcode"]
     street_address = request.form["streetAddress"]
@@ -401,7 +405,6 @@ def recieve_liff():
         template=ButtonsTemplate(
             title='いつ市役所にはお越しになりますか？',
             text='以下よりご選択ください。',
-            default_action=PostbackAction(data="",display_text="市役所に向かう日を入力しました"),
             actions=[
                 DatetimePickerAction(
                     label='日時選択',
