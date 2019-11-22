@@ -3,34 +3,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="static/css/enter_address.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/enter_address.css">
     <title>住所入力</title>
 </head>
 <body>
-    <div id="inputField">
-        <p id="describe">*デモ版</p>
         <form action="/recieve_address" method="POST"id="inputform">
-            <p id="checkArea">
-                <input required type=checkbox id="idChecker">  ユーザーIDの送信を承諾
-            </p>
-            郵便番号(ハイフンは不要)
-            <input required class="inputArea" type="number" id="zipcode" name="zipcode" onKeyUp="AjaxZip3.zip2addr(this,'','streetAddress','streetAddress');">
-            <br>
-            住所
-            <input required class="inputArea" type="text" id="streetAddress" name="streetAddress">
-            <br>
-            <br>
-            番地以降
-            <input required class="inputArea" id="address" type="text" name="address">
-            <br>
+            <div class="cp_ipcheck">
+                <label>
+                    <input required type="checkbox" class="option-input02 checkbox" id="idChecker" />
+                    ユーザーIDの送信を承諾
+                </label>
+            </div>
+
+            <div class="cp_iptxt">
+                <input required type="number" placeholder="郵便番号" id="zipcode" name="zipcode" onKeyUp="AjaxZip3.zip2addr(this,'','streetAddress','streetAddress');">
+                <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+            </div>
+
+            <div class="cp_iptxt">
+                <input required type="text" placeholder="住所" id="streetAddress" name="streetAddress">
+                <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+            </div>
+            
+            <div class="cp_iptxt">
+                <input type="text" placeholder="番地以降" id="address" name="address">
+                <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+            </div>
             <!--questionとanswerを無理やり渡したい。-->
             <input type="hidden" name ="question" value="question_n">
             <input type="hidden" name="answer" value="moving_2">
             <!--hiddenでuserIDも渡す。-->
             <input required hidden type="text" id="userId" name="user_id">
             <!--送信ボタン。-->
-            <br>
-            <button c type="submit" id="sendButton">確定</button>
+            <div class="cp_submit">
+                <button class="cp_button06" id="sendButton">送信</button>
+            </div>
         </form>
         <font color="red"><p id="errorP1"></p></font>
         <font color="red"><p id="errorP2"></p></font>

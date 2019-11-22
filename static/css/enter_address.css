@@ -1,31 +1,198 @@
-#describe {
-    font-size: 100%;
+.cp_submit {
+	position: relative;
+	width: 27.33%;
+    padding: 20px 3%;
+    height: 6%;
 }
-#inputField{
-    width:60%;
-    margin:0 auto;
+.cp_button06{
+    position: relative;
+    margin:0 34%;
+    font-size: auto;
 }
-.inputArea{
-    width:100%;
-    margin:0 auto;
-    height:7%;
-    border-radius:5px ; 
+.cp_iptxt {
+	position: relative;
+	width: 27.33%;
+	margin: 40px 3%;
 }
-#inputform{
-    width:100%;
+.cp_ipcheck {
+	position: relative;
+	width: 27.33%;
+	margin: 40px 3%;
 }
-#sendButton{
-    height: 8%;
-    width:80%;
-    margin:3% 10%;
-    border-radius:7px ; 
+.cp_iptxt input[type='text'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.3em;
+	padding-left: 40px;
+	letter-spacing: 1px;
+	border: 0;
 }
-#idChecker{
-    margin:0px;
-    padding:0px;
+.cp_iptxt input[type='text']:focus {
+	outline: none;
+}
+.cp_iptxt input[type='text']:focus::after {
+	outline: none;
+}
+.cp_iptxt input[type='number'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.3em;
+	padding-left: 40px;
+	letter-spacing: 1px;
+	border: 0;
+}
+.cp_iptxt input[type='number']:focus {
+	outline: none;
+}
+.cp_iptxt input[type='number']:focus::after {
+	outline: none;
+}
+.cp_iptxt i {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 9px 5px;
+	transition: 0.3s;
+	color: #aaaaaa;
+}
+.cp_iptxt::after {
+	display: block;
+	width: 100%;
+	height: 4px;
+	margin-top: -1px;
+	content: '';
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: #da3c41;
 }
 
-#checkArea{
-    margin-top: 0px;
-    width:100%;
+.cp_ipcheck .option-input02 {
+	position: relative;
+	top: 13.33333px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 30px;
+	height: 30px;
+	margin-right: 0.5rem;
+	cursor: pointer;
+	transition: all 0.15s ease-out 0s;
+	color: #ffffff;
+	border: none;
+	outline: none;
+	background: #d7cbcb;
+	-webkit-appearance: none;
+	        appearance: none;
+}
+.cp_ipcheck .option-input02:hover {
+	background: #d6a9a9;
+}
+.cp_ipcheck .option-input02:checked {
+	background: #da3c41;
+}
+.cp_ipcheck .option-input02:checked::before {
+	font-size: 20px;
+	line-height: 30px;
+	position: absolute;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	content: '✔';
+	text-align: center;
+}
+.cp_ipcheck .option-input02:checked::after {
+	position: relative;
+	display: block;
+	content: '';
+	-webkit-animation: click-wave 0.65s;
+	        animation: click-wave 0.65s;
+	background: #da3c41;
+}
+.cp_ipcheck .option-input02.radio {
+	border-radius: 50%;
+}
+.cp_ipcheck .option-input02.radio::after {
+	border-radius: 50%;
+}
+.cp_ipcheck label {
+	line-height: 40px;
+	display: block;
+}
+.cp_ipcheck .option-input02:disabled {
+	cursor: not-allowed;
+	background: #b8b7b7;
+}
+.cp_ipcheck .option-input02:disabled::before {
+	font-size: 20px;
+	line-height: 30px;
+	position: absolute;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	content: '✖︎';
+	text-align: center;
+}
+
+.cp_button06 {
+	position: relative;
+	z-index: 1;
+	padding: 1em;
+	width: 160px;
+	line-height: 1.4;
+	cursor: pointer;
+	transition: color .3s cubic-bezier(.02,.01,.47,1),border-color .3s cubic-bezier(.02,.01,.47,1);
+	color: #F06292;
+	background: transparent;
+	overflow: hidden;
+	border: 1px solid #F06292;
+	border-radius: 100px;
+	background: #fff;
+}
+.cp_button06:after, .cp_button06:before {
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 120%;
+	content: '';
+	transition: transform 0.15s cubic-bezier(0.02,0.01,0.47,1),opacity 0.15s cubic-bezier(0.02,0.01,0.47,1);
+	opacity: 0;
+}
+.cp_button06:before {
+	background: #D81B60;
+	-webkit-transform: translate3d(-110%,-10%,0) skewX(-20deg);
+	transform: translate3d(-110%,-10%,0) skewX(-20deg);
+}
+.cp_button06:after {
+	-webkit-transform: translate3d(110%,-10%,0) skewX(-20deg);
+	transform: translate3d(110%,-10%,0) skewX(-20deg);
+	background: #F06292;
+}
+.cp_button06:hover {
+	transition: all 0.5s cubic-bezier(0.02,0.01,0.47,1);
+	box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+	color: #ffffff;
+	background: #E91E63;
+	border: 1px solid #F06292;
+}
+.cp_button06:hover:after, .cp_button06:hover:before {
+	transition: transform 0.25s cubic-bezier(0.02,0.01,0.47,1),opacity 0.25s cubic-bezier(0.02,0.01,0.47,1);
+	-webkit-transform: translate3d(50%,-10%,0) skewX(-20deg);
+	transform: translate3d(50%,-10%,0) skewX(-20deg);
+	opacity: 1;
+}
+.cp_button06:active {
+	opacity: 0.5;
+	color: #F06292;
+}
+.cp_button06:focus {
+	border: 1px solid #F06292;
+	color: #F06292;
+}
+.cp_button06:focus:hover {
+	color: #ffffff;
+	border: 1px solid #F06292;
 }
