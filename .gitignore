@@ -3,3 +3,5 @@ sample*
 .vscode
 .DS_store
 img/*
+__pycache__
+.env 
