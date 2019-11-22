@@ -81,10 +81,10 @@ I_SQL = f"""
 # 以下、Flask web app
 app = Flask(__name__)
 
-# os.environ['LINE_CHANNEL_ACCESS_TOKEN']
-CHANNEL_ACCESS_TOKEN = "iZUTysRoxXXyoyqAojZ1rlipFpvyZQBOi2hieo5CIGnIvwahhDYJE3nW+wSEys7HsmRbhh00lcrm8aYNifLYLyyjA0ZUnE00yYJD2p7gjzw9cd0KxUjR6uBo7ItUF+r746kLemUTa84mb285I75gKAdB04t89/1O/w1cDnyilFU="
-# os.environ['LINE_CHANNEL_SECRET']
-CHANNEL_SECRET = "fce81fae0165cfdb304c730d5d1b5f9f"
+CHANNEL_ACCESS_TOKEN = os.environ['LINE_CHANNEL_ACCESS_TOKEN']
+#CHANNEL_ACCESS_TOKEN = "iZUTysRoxXXyoyqAojZ1rlipFpvyZQBOi2hieo5CIGnIvwahhDYJE3nW+wSEys7HsmRbhh00lcrm8aYNifLYLyyjA0ZUnE00yYJD2p7gjzw9cd0KxUjR6uBo7ItUF+r746kLemUTa84mb285I75gKAdB04t89/1O/w1cDnyilFU="
+CHANNEL_SECRET=os.environ['LINE_CHANNEL_SECRET']
+#CHANNEL_SECRET = "fce81fae0165cfdb304c730d5d1b5f9f"
 
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
@@ -213,7 +213,7 @@ def handle_postback(event):
                         URIAction(
                             label='住所を入力',
                             # LIFFのURL
-                            uri='line://app/1653562221-8AborYAk/',
+                            uri='line://app/1653562221-8AborYAk',
                             data="question_n:moving_2",
                         )
                     ])
