@@ -6,6 +6,6 @@ window.onload = function (e) {
             liff.closeWindow();
         };
 
-        setTimeout(closer, 1000);
+        setTimeout(closer, 500);
     });
 };

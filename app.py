@@ -149,6 +149,7 @@ def handle_message(event):
                 actions=[
                     PostbackAction(
                         label='引越し手続き(転出届)',
+                        display_text="転出届けを出したい",
                         data='start:moving'
                     ),
                     PostbackAction(
@@ -193,6 +194,7 @@ def handle_postback(event):
                 template=ButtonsTemplate(
                     title='いつ転居なされる予定ですか？',
                     text='以下よりご選択ください。',
+                    defaultAction=PostbackAction(data="", display_text="転居日を入力しました"),
                     actions=[
                         DatetimePickerAction(
                             label='転居予定日の選択',
@@ -230,7 +232,10 @@ def handle_postback(event):
                 template=ButtonsTemplate(
                     title='お引越し先のご住所はどちらですか？',
                     text='以下よりご入力ください。',
+                    default_action=PostbackAction(
+                        data="", display_text="引越し先の住所を入力しました"),
                     actions=[
+                        
                         URIAction(
                             label='住所を入力',
                             uri='line://app/1653526331-jJQZGQGJ',
@@ -284,10 +289,12 @@ def handle_postback(event):
                     actions=[
                         PostbackAction(
                             label='OK',
+                            display_text="入力内容に間違いはないです",
                             data='confirm:moving_end'
                         ),
                         PostbackAction(
                             label='取り消し',
+                            display_text="これから先は開発中です。",
                             # 訂正についてはまだ未実装。
                             data='correct:moving_end'
                         )
@@ -348,6 +355,7 @@ def handle_follow(event):
             actions=[
                 PostbackAction(
                     label='引越し手続き(転出届け)',
+                    display_text="転出届けを出したい",
                     data='start:moving'
                 ),
                 PostbackAction(
@@ -393,6 +401,7 @@ def recieve_liff():
         template=ButtonsTemplate(
             title='いつ市役所にはお越しになりますか？',
             text='以下よりご選択ください。',
+            default_action=PostbackAction(data="",display_text="市役所に向かう日を入力しました"),
             actions=[
                 DatetimePickerAction(
                     label='日時選択',
