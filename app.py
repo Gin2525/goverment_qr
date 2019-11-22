@@ -2,7 +2,7 @@ import os
 import sys
 from flask import *
 import psycopg2
-from . import tools
+from tools import tools
 from datetime import datetime
 import qrcode
 from imgurpython import ImgurClient
