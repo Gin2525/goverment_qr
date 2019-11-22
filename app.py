@@ -145,7 +145,7 @@ def handle_message(event):
             alt_text='Buttons template',
             template=ButtonsTemplate(
                 title='目的選択',
-                text='自分の目的に合うものをご選択ください。',
+                text='自分の目的に合うものをご選択ください。', 
                 actions=[
                     PostbackAction(
                         label='引越し手続き(転出届)',
@@ -194,7 +194,7 @@ def handle_postback(event):
                 template=ButtonsTemplate(
                     title='いつ転居なされる予定ですか？',
                     text='以下よりご選択ください。',
-                    defaultAction=PostbackAction(data="", display_text="転居日を入力しました"),
+                    defaultAction=PostbackAction(data=" ", display_text="転居日を入力しました"),
                     actions=[
                         DatetimePickerAction(
                             label='転居予定日の選択',
