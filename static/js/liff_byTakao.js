@@ -9,7 +9,7 @@ window.onload = function (e) {
                 liff.closeWindow();
             });
             document.getElementById("sendButton").addEventListener('click',function(){
-                userId = document.getElementById("userIdField").textContent;
+                userId = document.getElementById("userId").textContent;
                 errorP1 = document.getElementById("errorP1");
                 errorP2 = document.getElementById("errorP2");
                 zipcode = document.getElementById("zipcode").value;
@@ -30,7 +30,6 @@ window.onload = function (e) {
     function getProfile(){
         liff.getProfile().then(function (profile){
             //useridを渡す。
-            document.getElementById('userIdField').textContent=profile.userId;
             document.getElementById('userId').value=profile.userId;
         });
     };

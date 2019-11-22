@@ -8,12 +8,10 @@
 </head>
 <body>
     <div id="inputField">
-        <p id="describe">*デモ版です。下のチェックマークを入れていただかないと<br>
-            userIDがこちらに届かないので動きません。押してくださいね。</p>
-        <p id="userIdField"></p>
+        <p id="describe">*デモ版</p>
         <form action="/recieve_address" method="POST"id="inputform">
             <p id="checkArea">
-                <input required type=checkbox id="idChecker">  ユーザーIDを送信することを承諾
+                <input required type=checkbox id="idChecker">  ユーザーIDの送信を承諾
             </p>
             郵便番号(ハイフンは不要)
             <input required class="inputArea" type="number" id="zipcode" name="zipcode" onKeyUp="AjaxZip3.zip2addr(this,'','streetAddress','streetAddress');">
