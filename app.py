@@ -376,6 +376,7 @@ def recieve_liff():
                 )
             ])
     )
+    print("dfjakdklfa")
     # APIの返り値による例外処理を無視したいので、一旦関数に入れ込む。
     push_message(user_id, message)
     return render_template("confirm.html")
